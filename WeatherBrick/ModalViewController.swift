@@ -47,7 +47,14 @@ class ModalViewController: UIViewController {
         view.addGestureRecognizer(swipeRecognizer)
     }
     
-    @objc private func handleSwipeGesture(sender: UISwipeGestureRecognizer) {
+    
+    private func setUpUI() {
+        
+    }
+    
+    
+    @objc
+    private func handleSwipeGesture(sender: UISwipeGestureRecognizer) {
         dismiss(animated: true, completion: nil)
     }
     
