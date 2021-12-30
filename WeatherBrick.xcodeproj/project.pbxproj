@@ -113,6 +113,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		92429A3D277DD56F00A57CCD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9264E770277A299A00506375 /* ModalViewController.swift */,
+				A3475F00273305F200BF5E86 /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		A3475EF2273305F200BF5E86 = {
 			isa = PBXGroup;
 			children = (
@@ -138,8 +147,7 @@
 		A3475EFD273305F200BF5E86 /* WeatherBrick */ = {
 			isa = PBXGroup;
 			children = (
-				A3475F00273305F200BF5E86 /* ViewController.swift */,
-				9264E770277A299A00506375 /* ModalViewController.swift */,
+				92429A3D277DD56F00A57CCD /* Controller */,
 				9264E774277A29D700506375 /* Gradient.swift */,
 				9264E772277A29B900506375 /* Colors.swift */,
 				A3475F02273305F200BF5E86 /* Main.storyboard */,
@@ -582,7 +590,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -636,7 +644,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -652,7 +660,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = WeatherBrick/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -671,7 +679,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = WeatherBrick/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

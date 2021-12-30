@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "ва.png",
+      "filename" : "са.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ва-1.png",
+      "filename" : "са-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ва-2.png",
+      "filename" : "са-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
