@@ -28,12 +28,12 @@ class ThirdViewController: UIViewController {
     func handlePullRefresh() {
         let originTopConstraint = upConstraint.constant
         let originDownConstraint = downConstraint.constant
-        UIView.animate(withDuration: 0.3 , animations: {
+        UIView.animate(withDuration: 0.3, animations: {
             self.upConstraint.constant += 40
             self.downConstraint.constant -= 40
             self.view.layoutIfNeeded()
         }, completion: {_ in
-            UIView.animate(withDuration: 0.3 , animations: {
+            UIView.animate(withDuration: 0.3, animations: {
                 self.upConstraint.constant = originTopConstraint
                 self.downConstraint.constant = originDownConstraint
                 self.view.layoutIfNeeded()

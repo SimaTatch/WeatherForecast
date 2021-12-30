@@ -36,6 +36,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         noticeNetwork.isHidden = true
         info.setGradientLayer(colorsInOrder: Colors.colorsArray)
         brickScroll.refreshControl = myRefreshControl
+        
+//        let indicatorSize: CGFloat = 50
+//        let indicatorFrame = CGRect(x: (self.view.frame.width - indicatorSize)/2, y: (self.view.frame.height - indicatorSize)/2, width: indicatorSize, height: indicatorSize)
+//        self.activityIndicator = NVActivityIndicatorView(frame: indicatorFrame, type: .circleStrokeSpin, color: UIColor.white, padding: 20.0)
+//        self.activityIndicator.backgroundColor = .orange
+//        self.view.addSubview(self.activityIndicator)
+//        self.activityIndicator.startAnimating()
 
         monitorNetwork()
     }
@@ -51,18 +58,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
                 DispatchQueue.main.async {
+                    if self.brickScroll.refreshControl?.isRefreshing != true {
                     self.noticeNetwork.isHidden = true
-                    let indicatorSize: CGFloat = 50
-                    let indicatorFrame = CGRect(x: (self.view.frame.width - indicatorSize)/2, y: (self.view.frame.height - indicatorSize)/2, width: indicatorSize, height: indicatorSize)
-                    self.activityIndicator = NVActivityIndicatorView(frame: indicatorFrame, type: .circleStrokeSpin, color: UIColor.white, padding: 20.0)
-                    self.activityIndicator.backgroundColor = .orange
-                    self.view.addSubview(self.activityIndicator)
-                    
                     self.locationManager.requestWhenInUseAuthorization()
-                    self.activityIndicator.startAnimating()
-                    if(CLLocationManager.locationServicesEnabled()){
+                        if(CLLocationManager.locationServicesEnabled()){
                         self.locationManager.delegate = self
                         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                        self.locationManager.startUpdatingLocation()
+                        }
+                    } else {
+                        self.noticeNetwork.isHidden = true
                         self.locationManager.startUpdatingLocation()
                     }
                 }
@@ -70,7 +75,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 DispatchQueue.main.async {
                     self.noticeNetwork.isHidden = false
                     self.noticeNetwork.text = "No Internet connection"
-  
+                    self.brickScroll.refreshControl?.endRefreshing()
                 }
             }
         }
@@ -86,7 +91,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         { response in
             switch response.result {
             case .success(let value):
-                self.activityIndicator.stopAnimating()
                 let jsonResponce = JSON(value)
                 let jsonWeather = jsonResponce["weather"].array![0]
                 let jsonTemperature = jsonResponce["main"]
@@ -102,7 +106,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
         self.locationManager.stopUpdatingLocation()
         
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { 
             self.brickScroll.refreshControl?.endRefreshing()
         }
     }
