@@ -12,7 +12,7 @@ class ModalViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setUpUI()
         let swipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipeGesture))
         swipeRecognizer.direction = .down
         view.addGestureRecognizer(swipeRecognizer)

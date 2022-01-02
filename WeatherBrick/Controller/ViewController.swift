@@ -1,13 +1,12 @@
 import Foundation
 import UIKit
+import Network
 import Alamofire
 import SwiftyJSON
-import NVActivityIndicatorView
 import CoreLocation
-import Network
+
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
-    
     
     @IBOutlet weak var brickImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -17,18 +16,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var brickScroll: UIScrollView!
     @IBOutlet weak var noticeNetwork: UILabel!
     
-
-    let apiKey = "df801cce69d6a983348608344a2a8453"
-    var lat = 11.344533
-    var lon = 104.33322
+    let locationManager = CLLocationManager()
     let myRefreshControl: UIRefreshControl = {
         let refreshControll = UIRefreshControl()
         refreshControll.addTarget(self, action: #selector(refresh), for: .valueChanged)
         return refreshControll
     }()
-    var activityIndicator: NVActivityIndicatorView!
-    var refreshIndicator: NVActivityIndicatorView!
-    let locationManager = CLLocationManager()
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,39 +31,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         info.setGradientLayer(colorsInOrder: Colors.colorsArray)
         brickScroll.refreshControl = myRefreshControl
         
-//        let indicatorSize: CGFloat = 50
-//        let indicatorFrame = CGRect(x: (self.view.frame.width - indicatorSize)/2, y: (self.view.frame.height - indicatorSize)/2, width: indicatorSize, height: indicatorSize)
-//        self.activityIndicator = NVActivityIndicatorView(frame: indicatorFrame, type: .circleStrokeSpin, color: UIColor.white, padding: 20.0)
-//        self.activityIndicator.backgroundColor = .orange
-//        self.view.addSubview(self.activityIndicator)
-//        self.activityIndicator.startAnimating()
-
         monitorNetwork()
     }
-    
+
     @objc
     private func refresh(sender: UIRefreshControl) {
         monitorNetwork()
     }
-    
     
     func monitorNetwork() {
         let monitor = NWPathMonitor()
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
                 DispatchQueue.main.async {
-                    if self.brickScroll.refreshControl?.isRefreshing != true {
                     self.noticeNetwork.isHidden = true
-                    self.locationManager.requestWhenInUseAuthorization()
-                        if(CLLocationManager.locationServicesEnabled()){
-                        self.locationManager.delegate = self
-                        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-                        self.locationManager.startUpdatingLocation()
-                        }
-                    } else {
-                        self.noticeNetwork.isHidden = true
-                        self.locationManager.startUpdatingLocation()
-                    }
+                    self.managerStartUpdatingLocation()
                 }
             } else {
                 DispatchQueue.main.async {
@@ -81,6 +57,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
         let queue = DispatchQueue(label: "Network")
         monitor.start(queue: queue)
+    }
+    
+    func managerStartUpdatingLocation() {
+        self.locationManager.requestWhenInUseAuthorization()
+        if(CLLocationManager.locationServicesEnabled()){
+        self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.startUpdatingLocation()
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -106,10 +91,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
         self.locationManager.stopUpdatingLocation()
         
-        DispatchQueue.main.async { 
+        DispatchQueue.main.async {
             self.brickScroll.refreshControl?.endRefreshing()
         }
     }
+    
     
     @IBAction func infoButton(_ sender: UIButton) {
         let modalViewController = storyboard?.instantiateViewController(withIdentifier: "modalVC") as! ModalViewController
