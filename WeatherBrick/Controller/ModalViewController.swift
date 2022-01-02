@@ -13,6 +13,17 @@ class ModalViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let swipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipeGesture))
+        swipeRecognizer.direction = .down
+        view.addGestureRecognizer(swipeRecognizer)
+    }
+    
+    @objc
+    private func handleSwipeGesture(sender: UISwipeGestureRecognizer) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    private func setUpUI() {
         infoView.backgroundColor = UIColor(cgColor: Colors.OrangeGrad)
         infoView.layer.cornerRadius = 15
         infoView.layer.shadowOpacity = 1
@@ -40,21 +51,6 @@ class ModalViewController: UIViewController {
         paragraphStyle.lineHeightMultiple = 1.68
         infoDiscription.attributedText = NSMutableAttributedString(string: "Brick is wet - raining \nBrick is dry - sunny \nBrick is hard to see - fog \nBrick with cracks - very hot \nBrick with snow - snow \nBrick is swinging- windy \nBrick is gone - no Internet", attributes: [NSAttributedString.Key.kern: -0.3, NSAttributedString.Key.paragraphStyle: paragraphStyle])
 
-        
-        let swipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipeGesture))
-        swipeRecognizer.direction = .down
-        view.addGestureRecognizer(swipeRecognizer)
-    }
-    
-    
-    private func setUpUI() {
-        
-    }
-    
-    
-    @objc
-    private func handleSwipeGesture(sender: UISwipeGestureRecognizer) {
-        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func hideButton(_ sender: UIButton) {
