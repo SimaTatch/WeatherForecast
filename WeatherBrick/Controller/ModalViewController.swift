@@ -49,7 +49,7 @@ class ModalViewController: UIViewController {
         infoDiscription.numberOfLines = 0
         infoDiscription.lineBreakMode = .byWordWrapping
         paragraphStyle.lineHeightMultiple = 1.68
-        infoDiscription.attributedText = NSMutableAttributedString(string: "Brick is wet - raining \nBrick is dry - sunny \nBrick is hard to see - fog \nBrick with cracks - very hot \nBrick with snow - snow \nBrick is swinging- windy \nBrick is gone - no Internet", attributes: [NSAttributedString.Key.kern: -0.3, NSAttributedString.Key.paragraphStyle: paragraphStyle])
+        infoDiscription.attributedText = NSMutableAttributedString(string: "Brick is wet - raining \nBrick is dry - sunny \nBrick is hard to see - fog \nBrick with cracks - very hot \nBrick with snow - snow \nBrick is gone - no Internet", attributes: [NSAttributedString.Key.kern: -0.3, NSAttributedString.Key.paragraphStyle: paragraphStyle])
 
     }
     

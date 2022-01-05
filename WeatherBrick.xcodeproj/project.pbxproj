@@ -13,6 +13,7 @@
 		92429A3C277CC02300A57CCD /* exampleBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92429A3B277CC02300A57CCD /* exampleBrick.swift */; };
 		92429A4A2781EDEE00A57CCD /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92429A492781EDEE00A57CCD /* Constant.swift */; };
 		92429A4D2782502C00A57CCD /* NetworkWeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92429A4C2782502C00A57CCD /* NetworkWeatherManager.swift */; };
+		92429A4F27847DF200A57CCD /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92429A4E27847DF200A57CCD /* APIRequest.swift */; };
 		9264E771277A299A00506375 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264E770277A299A00506375 /* ModalViewController.swift */; };
 		9264E773277A29B900506375 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264E772277A29B900506375 /* Colors.swift */; };
 		9264E775277A29D700506375 /* Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264E774277A29D700506375 /* Gradient.swift */; };
@@ -56,6 +57,7 @@
 		92429A3B277CC02300A57CCD /* exampleBrick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exampleBrick.swift; sourceTree = "<group>"; };
 		92429A492781EDEE00A57CCD /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		92429A4C2782502C00A57CCD /* NetworkWeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkWeatherManager.swift; sourceTree = "<group>"; };
+		92429A4E27847DF200A57CCD /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		9264E770277A299A00506375 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
 		9264E772277A29B900506375 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		9264E774277A29D700506375 /* Gradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gradient.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				92429A4C2782502C00A57CCD /* NetworkWeatherManager.swift */,
+				92429A4E27847DF200A57CCD /* APIRequest.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -198,11 +201,11 @@
 		A3ACF2DE27383B7400CEE97C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				92429A3B277CC02300A57CCD /* exampleBrick.swift */,
-				9264E772277A29B900506375 /* Colors.swift */,
-				9264E774277A29D700506375 /* Gradient.swift */,
 				A3475EFE273305F200BF5E86 /* AppDelegate.swift */,
 				92429A492781EDEE00A57CCD /* Constant.swift */,
+				9264E774277A29D700506375 /* Gradient.swift */,
+				9264E772277A29B900506375 /* Colors.swift */,
+				92429A3B277CC02300A57CCD /* exampleBrick.swift */,
 				A3475F0A273305F400BF5E86 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -508,6 +511,7 @@
 				9264E773277A29B900506375 /* Colors.swift in Sources */,
 				9264E771277A299A00506375 /* ModalViewController.swift in Sources */,
 				92429A3C277CC02300A57CCD /* exampleBrick.swift in Sources */,
+				92429A4F27847DF200A57CCD /* APIRequest.swift in Sources */,
 				A3475EFF273305F200BF5E86 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

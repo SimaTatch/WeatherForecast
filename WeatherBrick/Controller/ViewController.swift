@@ -1,8 +1,6 @@
 import Foundation
 import UIKit
 import Network
-import Alamofire
-import SwiftyJSON
 import CoreLocation
 
 
@@ -16,6 +14,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var brickScroll: UIScrollView!
     @IBOutlet weak var noticeNetwork: UILabel!
     
+    let networkWeatherManager = NetworkWeatherManager()
+    let apiRequest = APIRequest()
     let locationManager = CLLocationManager()
     let myRefreshControl: UIRefreshControl = {
         let refreshControll = UIRefreshControl()
@@ -31,70 +31,88 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         info.setGradientLayer(colorsInOrder: Colors.colorsArray)
         brickScroll.refreshControl = myRefreshControl
         
-        monitorNetwork()
+        
+        networkWeatherManager.monitorNetwork(unsatisfied: {
+            self.unsatisfiedOutletProperties()
+        }, satisfied: {
+            self.startUpdatingLocation()
+        })
     }
+    
 
     @objc
     private func refresh(sender: UIRefreshControl) {
-        monitorNetwork()
+        
+        networkWeatherManager.monitorNetwork(unsatisfied: {
+            self.unsatisfiedOutletProperties()
+        }, satisfied: {
+            self.startUpdatingLocation()
+        })
     }
     
-    func monitorNetwork() {
-        let monitor = NWPathMonitor()
-        monitor.pathUpdateHandler = { path in
-            if path.status == .satisfied {
-                DispatchQueue.main.async {
-                    self.noticeNetwork.isHidden = true
-                    self.managerStartUpdatingLocation()
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.noticeNetwork.isHidden = false
-                    self.noticeNetwork.text = "No Internet connection"
-                    self.brickScroll.refreshControl?.endRefreshing()
-                }
-            }
-        }
-        let queue = DispatchQueue(label: "Network")
-        monitor.start(queue: queue)
-    }
     
-    func managerStartUpdatingLocation() {
+    func unsatisfiedOutletProperties() {
+        self.brickImageView.image = UIImage(named: "empty")
+        self.noticeNetwork.isHidden = false
+        self.brickScroll.refreshControl?.endRefreshing()
+    }
+  
+//    проверяет покдлючение к сети
+    
+//    func monitorNetwork() {
+//        let monitor = NWPathMonitor()
+//        monitor.pathUpdateHandler = { path in
+//            if path.status == .satisfied {
+//                DispatchQueue.main.async {
+//                    self.startUpdatingLocation()
+//                }
+//            } else {
+//                DispatchQueue.main.async {
+//                    self.brickImageView.image = UIImage(named: "empty")
+//                    self.noticeNetwork.isHidden = false
+//                    self.brickScroll.refreshControl?.endRefreshing()
+//                }
+//            }
+//        }
+//        let queue = DispatchQueue(label: "Network")
+//        monitor.start(queue: queue)
+//    }
+    
+    
+    func startUpdatingLocation() {
         self.locationManager.requestWhenInUseAuthorization()
         if(CLLocationManager.locationServicesEnabled()){
+        self.noticeNetwork.isHidden = true
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.startUpdatingLocation()
         }
     }
     
+ 
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[0]
         lat = location.coordinate.latitude
         lon = location.coordinate.longitude
-        AF.request("http://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(apiKey)&units=metric").responseData
-        { response in
-            switch response.result {
-            case .success(let value):
-                let jsonResponce = JSON(value)
-                let jsonWeather = jsonResponce["weather"].array![0]
-                let jsonTemperature = jsonResponce["main"]
-                let iconName = jsonWeather["icon"].stringValue
-                
-                self.locationLabel.text = jsonResponce["name"].stringValue
-                self.brickImageView.image = UIImage(named: iconName)
-                self.conditionLabel.text = jsonWeather["main"].stringValue
-                self.temperatureLabel.text = "\(Int(round(jsonTemperature["temp"].doubleValue)))º"
-            case .failure(let error):
-                print(error)
-            }
+            apiRequest.makeRequest { jsonResponce in
+            let jsonWeather = jsonResponce["weather"].array![0]
+            let jsonTemperature = jsonResponce["main"]
+            let iconName = jsonWeather["icon"].stringValue
+            
+            self.locationLabel.text = jsonResponce["name"].stringValue
+            self.brickImageView.image = UIImage(named: iconName)
+            self.conditionLabel.text = jsonWeather["main"].stringValue
+            self.temperatureLabel.text = "\(Int(round(jsonTemperature["temp"].doubleValue)))º"
+        } failure: { error in
+            print(error)
         }
         self.locationManager.stopUpdatingLocation()
-        
+
         DispatchQueue.main.async {
             self.brickScroll.refreshControl?.endRefreshing()
         }
-    }
+}
     
     
     @IBAction func infoButton(_ sender: UIButton) {
